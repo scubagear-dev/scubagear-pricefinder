@@ -1,0 +1,60 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "scubagear-pricefinder"
+version = "0.1.0"
+description = "Price finder & comparison for diving gear in Italy"
+requires-python = ">=3.11"
+authors = [{name = "ScubaGear", email = "dev@scubagear.local"}]
+
+dependencies = [
+    # HTTP & Scraping
+    "httpx[http2]==0.25.2",
+    "lxml==4.9.4",
+    
+    # FastAPI & Web
+    "fastapi==0.109.0",
+    "uvicorn[standard]==0.27.0",
+    "pydantic==2.5.3",
+    "pydantic-settings==2.1.0",
+    
+    # Database (SQLite only for MVP)
+    "sqlalchemy==2.0.23",
+    
+    # Task Scheduling
+    "apscheduler==3.10.4",
+    
+    # Utilities
+    "python-dotenv==1.0.0",
+    "structlog==24.1.0",
+    "tenacity==8.2.3",
+    "click==8.1.7",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==7.4.3",
+    "pytest-asyncio==0.23.2",
+    "black==23.12.1",
+    "ruff==0.1.13",
+    "mypy==1.7.1",
+    "ipython==8.18.1",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/scubagear_pricefinder"]
+
+[tool.black]
+line-length = 88
+target-version = ["py311", "py312"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+select = ["E", "F", "W", "I", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
